@@ -6,8 +6,14 @@ WORKDIR /app
 RUN npm install
 RUN apt-get update
 RUN apt-get install -y vim
-RUN useradd -d /home/term -m -s /bin/bash term
-RUN echo 'term:term' | chpasswd
+
+ARG user=term
+ARG pass=term
+ENV user $user
+ENV pass $pass
+
+RUN useradd -d /home/$user -m -s /bin/bash $user
+RUN echo '$user:$pass' | chpasswd
 
 EXPOSE 3000
 
